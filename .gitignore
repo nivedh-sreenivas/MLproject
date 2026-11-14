@@ -218,3 +218,6 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+*.exe
+*.egg-info/
+.vscode/
