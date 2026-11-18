@@ -1,4 +1,8 @@
 pandas
 numpy
 seaborn
--e . #tells git to install this project as a package -e stands for editable code and the dot means this folder. This is done as ML convention
+matplotlib
+scikit-learn
+catboost
+xgboost
+# -e . #tells git to install this project as a package -e stands for editable code and the dot means this folder. This is done as ML convention
