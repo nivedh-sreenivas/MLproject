@@ -1,7 +1,10 @@
 import os
 import sys #for CustomException
+
 from src.exception import CustomException
 from src.logger import logging
+from src.components.data_transformation import DataTransformation, DataTransformationConfig
+
 import pandas as pd #for df
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass # powerful tool. will be explained later. used for class variables
@@ -9,7 +12,7 @@ from dataclasses import dataclass # powerful tool. will be explained later. used
 @dataclass #decorator used. Removes need for init in class. We can directly define class var.
 class DataIngestionConfig:
     '''
-    all the imputs needed for data config will be done within this class
+    all the inputs needed for data config will be done within this class
     (similar practice will be followed for data_transformation)
     '''
 
@@ -23,7 +26,7 @@ class DataIngestionConfig:
     test_data_path: str = os.path.join('artifacts',"test.csv")
     raw_data_path: str = os.path.join('artifacts',"raw.csv")
 
-#No decoratopr here since we have functions in below class.
+#No decorator here since we have functions in below class.
 #Use decorator only if class consists of variables.
 class DataIngestion:
     def __init__(self):
@@ -63,4 +66,7 @@ class DataIngestion:
 
 if __name__=='__main__':
     obj = DataIngestion()
-    obj.initiate_data_ingestion()
+    train_data, test_data = obj.initiate_data_ingestion()
+
+    data_transformation = DataTransformation()
+    data_transformation.initiate_data_transformation(train_data, test_data)
