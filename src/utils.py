@@ -8,6 +8,7 @@ from sklearn.metrics import r2_score
 from sklearn.model_selection import GridSearchCV
 from src.exception import CustomException
 
+# -- Function for SAVING objects --
 def save_object(file_path, obj):
     try:
         dir_path = os.path.dirname(file_path)
@@ -20,6 +21,18 @@ def save_object(file_path, obj):
     except Exception as e:
         raise CustomException(e, sys)
 
+
+# -- Function for READING objects --
+def load_object(file_path):
+    try:
+        with open(file_path, "rb") as file_obj:
+            return dill.load(file_obj)
+    
+    except Exception as e:
+        raise CustomException(e, sys)
+
+
+# -- MODEL EVALUATION FUNCTION --
 def evaluate_models(train_x, train_y, test_x, test_y, models, param):
     try:
         scores = {}

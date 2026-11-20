@@ -99,6 +99,7 @@ class ModelTrainer:
             # --BEST MODEL--
             best_model_name = max(models_score, key=models_score.get)
             best_model_score = models_score[best_model_name]
+            best_model = models[best_model_name]
 
             if best_model_score < 0.6: #0.6 -> 60% score
                 raise CustomException("Best model score not good enough.")
@@ -108,7 +109,7 @@ class ModelTrainer:
             #Saving trainer object that is created
             save_object(
                 file_path= self.model_trainer_config.trained_model_file_path,
-                obj= best_model_name
+                obj= best_model
             )
 
             return best_model_score
