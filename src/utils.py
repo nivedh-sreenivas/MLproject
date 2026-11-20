@@ -1,12 +1,11 @@
 #Used to store common functions used across the project
-import os
-import sys
+import os, sys
 import dill
 
 import numpy as np
 import pandas as pd
 from sklearn.metrics import r2_score
-
+from sklearn.model_selection import GridSearchCV
 from src.exception import CustomException
 
 def save_object(file_path, obj):
@@ -21,14 +20,26 @@ def save_object(file_path, obj):
     except Exception as e:
         raise CustomException(e, sys)
 
-def evaluate_models(train_x, train_y, test_x, test_y, models):
+def evaluate_models(train_x, train_y, test_x, test_y, models, param):
     try:
         scores = {}
 
         for i in range(len(list(models))):
-            model = list(models.values())[i] #Extract model from dict
+            model = list(models.values())[i] # Extract model from dict
+            para = param[list(models.keys())[i]] # Extracting respective parameters
 
-            model.fit(train_x, train_y) #Fitting model
+            gs = GridSearchCV(model, para, cv = 5, n_jobs= -1) # use n_jobs = -1 to utilize all CPU cores
+            gs.fit(train_x,train_y)
+
+            model.set_params(**gs.best_params_) # Adopts best settings
+            model.fit(train_x,train_y)
+
+            '''
+            print(gs.best_params_)   # best combination found
+            print(gs.best_score_)    # its average CV score
+            '''
+
+            #model.fit(train_x, train_y) #Fitting model
 
             test_y_pred = model.predict(test_x) #test data pred.
 

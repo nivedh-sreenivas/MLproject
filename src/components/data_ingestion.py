@@ -1,6 +1,6 @@
 import os
 import sys #for CustomException
-os.environ["LOKY_MAX_CPU_COUNT"] = "6"
+os.environ["LOKY_MAX_CPU_COUNT"] = "6" # done to silence warning in console regarding cpu scores
 
 from src.exception import CustomException
 from src.logger import logging
